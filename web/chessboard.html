@@ -1,0 +1,283 @@
+<html>
+  <head>
+    <title>16x32</title>
+    <style>
+    .container {
+        display: flex;
+    }
+
+    .divTable
+     {
+         position: relative;
+         display:  table;
+         width:auto;
+         background-color:#eee;
+         border:1px solid black;
+     }
+
+     .divRow
+     {
+        display:table-row;
+        width:auto;
+     }
+
+     .divCell
+     {
+         float:left;
+         display:table-column;
+         width:4.5em;
+         height:4.5em;
+         background-color:#ccc;
+         padding: 0px;
+         margin: 0px;
+     }
+
+     .divLabel {
+       float:left;
+       display:table-column;
+       width:7em;
+       background-color:#ccc;
+       padding-left: 10px;
+       margin: 0px;
+     }
+
+     .divValue {
+       float:left;
+       display:table-column;
+       width:12em;
+       background-color:#ccc;
+       padding-left: 20px;
+       margin: 0px;
+     }
+
+
+     .oddRow div:nth-child(odd) {
+         background: linear-gradient(Peru , SaddleBrown);
+         color: yellow;
+     }
+     .oddRow div:nth-child(even) {
+         background: linear-gradient(Beige , Bisque);
+         color: black;
+     }
+     .evenRow div:nth-child(even) {
+         background: linear-gradient(Peru , SaddleBrown);
+     }
+     .evenRow div:nth-child(odd) {
+         background: linear-gradient(Beige , Bisque);
+     }
+     .letter {
+       font-size: small;
+       position: relative;
+       top:55px;
+       left:57px;
+     }
+     .number {
+       font-size: small;
+     }
+     .piece {
+       position: absolute;
+       font-size: 3.2em;
+       display: block;
+       padding: 0px;
+       margin: 0px;
+     }
+     #nav {
+       height: 36em;
+       width: 21em;
+       display: block;
+       margin-right: 5px;
+       border: 1px solid DarkGrey;
+     }
+     #spar {
+       height: 36em;
+       width: 21em;
+       display: block;
+       margin-left: 5px;
+       border: 1px solid DarkGrey;
+     }
+     #spar_img {
+       height: 15em;
+       width: 20em;
+       display: block;
+       background: url("img/spar/main.png") no-repeat;
+       background-size:contain;
+       margin-left: -1.5em;
+     }
+     #spar_voice {
+         border: 2px solid #a1a1a1;
+         padding: 10px 5px;
+         background: #dddddd;
+         width: 14em;
+         height: 5em;
+         margin-left: 5em;
+         margin-top: 1em;
+         border-radius: 25px;
+     }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      $( document ).ready(function() {
+        var cellSize = $("#8-1").width();
+        var boardSize = $("#board").width();
+
+        function place(letter, number, code) {
+           var id=letter+number;
+           $("#board").append("<div id=\""+id+"\" class=\"piece\">"+code+"</div>");
+           var piece = $("#"+id);
+           var pieceWidth  = piece.width();
+           var pieceHeight = piece.height();
+           var x = (letter.charCodeAt(0)-'a'.charCodeAt(0))*cellSize+Math.floor((cellSize-pieceWidth)/2.0);
+           var y = (8-number)*cellSize+Math.floor((cellSize-pieceHeight)/2.0);
+           piece.css({top: y, left: x, position:'absolute'});
+        }
+
+        place("a",8,"&#9820;"); /* blackRook */
+        place("b",8,"&#9822;"); /* blackKnight */
+        place("c",8,"&#9821;"); /* blackBishop */
+        place("d",8,"&#9819;"); /* blackQueen*/
+        place("e",8,"&#9818;"); /* blackKing */
+        place("f",8,"&#9821;"); /* blackBishop */
+        place("g",8,"&#9822;"); /* blackKnight */
+        place("h",8,"&#9820;"); /* blackRook */
+
+        place("a",7,"&#9823;"); /* black pawn*/
+        place("b",7,"&#9823;"); /* black pawn*/
+        place("c",7,"&#9823;"); /* black pawn*/
+        place("d",7,"&#9823;"); /* black pawn*/
+        place("e",7,"&#9823;"); /* black pawn*/
+        place("f",7,"&#9823;"); /* black pawn*/
+        place("g",7,"&#9823;"); /* black pawn*/
+        place("h",7,"&#9823;"); /* black pawn*/
+
+        place("a",2,"&#9817;"); /* white pawn*/
+        place("b",2,"&#9817;"); /* white pawn*/
+        place("c",2,"&#9817;"); /* white pawn*/
+        place("d",2,"&#9817;"); /* hite pawn*/
+        place("e",2,"&#9817;"); /* white pawn*/
+        place("f",2,"&#9817;"); /* white pawn*/
+        place("g",2,"&#9817;"); /* white pawn*/
+        place("h",2,"&#9817;"); /* white pawn*/
+
+        place("a",1,"&#9814;"); /* whiteRook */
+        place("b",1,"&#9816;"); /* whiteKnight */
+        place("c",1,"&#9815;"); /* whiteBishop */
+        place("d",1,"&#9813;"); /* whiteQueen*/
+        place("e",1,"&#9812;"); /* whiteKing */
+        place("f",1,"&#9815;"); /* whiteBishop */
+        place("g",1,"&#9816;"); /* whiteKnight */
+        place("h",1,"&#9814;"); /* whiteRook */
+
+        $( ".piece" ).draggable({ containment: "parent" });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+        <div id="nav">
+          <div class="divTable">
+            <div class="divRow">
+              <div class="divLabel">You play with:</div>
+              <div class="divValue">
+                <select>
+                  <option value="white" selected>White pieces</option>
+                  <option value="black">Black pieces</option>
+                </select>
+              </div>
+            </div>
+            <div class="divRow">
+              <div class="divLabel">Your email:</div>
+              <div class="divValue"><input type="email" name="email"></input></div>
+            </div>
+
+          </div>
+        </div>
+        <div id="board" class="divTable">
+           <div id="8" class="divRow evenRow">
+              <div id="8-1" class="divCell"><span class="number">8</span></div>
+              <div id="8-2" class="divCell"></div>
+              <div id="8-3" class="divCell"></div>
+              <div id="8-4" class="divCell"></div>
+              <div id="8-5" class="divCell"></div>
+              <div id="8-6" class="divCell"></div>
+              <div id="8-7" class="divCell"></div>
+              <div id="8-8" class="divCell"></div>
+           </div>
+           <div id="7" class="divRow oddRow">
+             <div id="7-1" class="divCell"><span class="number">7</span></div>
+             <div id="7-2" class="divCell"></div>
+             <div id="7-3" class="divCell"></div>
+             <div id="7-4" class="divCell"></div>
+             <div id="7-5" class="divCell"></div>
+             <div id="7-6" class="divCell"></div>
+             <div id="7-7" class="divCell"></div>
+             <div id="7-8" class="divCell"></div>
+           </div>
+           <div id="6" class="divRow evenRow">
+              <div id="6-1" class="divCell"><span class="number">6</span></div>
+              <div id="6-2" class="divCell"></div>
+              <div id="6-3" class="divCell"></div>
+              <div id="6-4" class="divCell"></div>
+              <div id="6-5" class="divCell"></div>
+              <div id="6-6" class="divCell"></div>
+              <div id="6-7" class="divCell"></div>
+              <div id="6-8" class="divCell"></div>
+           </div>
+           <div id="5" class="divRow oddRow">
+              <div id="5-1" class="divCell"><span class="number">5</span></div>
+              <div id="5-2" class="divCell"></div>
+              <div id="5-3" class="divCell"></div>
+              <div id="5-4" class="divCell"></div>
+              <div id="5-5" class="divCell"></div>
+              <div id="5-6" class="divCell"></div>
+              <div id="5-7" class="divCell"></div>
+              <div id="5-8" class="divCell"></div>
+           </div>
+           <div id="4" class="divRow evenRow">
+              <div id="4-1" class="divCell"><span class="number">4</span></div>
+              <div id="4-2" class="divCell"></div>
+              <div id="4-3" class="divCell"></div>
+              <div id="4-4" class="divCell"></div>
+              <div id="4-5" class="divCell"></div>
+              <div id="4-6" class="divCell"></div>
+              <div id="4-7" class="divCell"></div>
+              <div id="4-8" class="divCell"></div>
+           </div>
+           <div id="3" class="divRow oddRow">
+               <div id="3-1" class="divCell"><span class="number">3</span></div>
+               <div id="3-2" class="divCell"></div>
+               <div id="3-3" class="divCell"></div>
+               <div id="3-4" class="divCell"></div>
+               <div id="3-5" class="divCell"></div>
+               <div id="3-6" class="divCell"></div>
+               <div id="3-7" class="divCell"></div>
+               <div id="3-8" class="divCell"></div>
+           </div>
+           <div id="2" class="divRow evenRow">
+               <div id="2-1" class="divCell"><span class="number">2</span></div>
+               <div id="2-2" class="divCell"></div>
+               <div id="2-3" class="divCell"></div>
+               <div id="2-4" class="divCell"></div>
+               <div id="2-5" class="divCell"></div>
+               <div id="2-6" class="divCell"></div>
+               <div id="2-7" class="divCell"></div>
+               <div id="2-8" class="divCell"></div>
+           </div>
+           <div id="1" class="divRow oddRow" >
+               <div id="1-1" class="divCell"><span class="number">1</span><span class="letter" style="left:53px">a</span></div>
+               <div id="1-2" class="divCell"><span class="letter">b</span></div>
+               <div id="1-3" class="divCell"><span class="letter">c</span></div>
+               <div id="1-4" class="divCell"><span class="letter">d</span></div>
+               <div id="1-5" class="divCell"><span class="letter">e</span></div>
+               <div id="1-6" class="divCell"><span class="letter">f</span></div>
+               <div id="1-7" class="divCell"><span class="letter">g</span></div>
+               <div id="1-8" class="divCell"><span class="letter">h</span></div>
+           </div>
+        </div>
+        <div id="spar">
+          <div id="spar_voice">Hello! My name is S.P.A.R. Let's play a game or two. You can pick a piece with your mouse and drag it over.</div>
+          <div id="spar_img"></div>
+        </div>
+    </div>
+  </body>
+</html>
